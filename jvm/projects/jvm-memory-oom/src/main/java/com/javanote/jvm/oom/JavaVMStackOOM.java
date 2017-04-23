@@ -1,4 +1,4 @@
-package com.javanote.jvm;
+package com.javanote.jvm.oom;
 /**
  * Java栈OutOfMemoryError
  *

@@ -1,4 +1,4 @@
-package com.javanote.jvm;
+package com.javanote.jvm.oom;
 
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;

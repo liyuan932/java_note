@@ -1,4 +1,4 @@
-package com.javanote.jvm;
+package com.javanote.jvm.oom;
 
 import java.util.ArrayList;
 import java.util.List;
