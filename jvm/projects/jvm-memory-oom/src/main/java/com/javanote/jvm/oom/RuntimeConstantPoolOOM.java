@@ -6,8 +6,7 @@ import java.util.List;
 
 /**
  * 运行时常量池溢出，仅适用于jdk6，jdk7字符串常量池移到了java heap中
- * VM Args：-XX:PermSize=10M -XX:MaxPermSize=10M
- * @author zzm
+ * VM Args：-XX:PermSize=8m -XX:MaxPermSize=8m -Xmx16M
  */
 public class RuntimeConstantPoolOOM {
 
