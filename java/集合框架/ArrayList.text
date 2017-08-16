@@ -1,0 +1,67 @@
+ArrayList持有1个Object数组elementData，对ArrayList的操作实际上是对这个数组的操作。
+
+容量capacity
+等价于elementData.length。
+
+扩容算法
+new ArrayList()时，容量为0；当使用add方法添加元素，会进行动态扩容，如果容量小于DEFAULT_CAPACITY，扩容至DEFAULT_CAPACITY，否则在原容量上扩容1/2。
+例：第1次add时，容量为默认值10；第11次add时，容量为15；依此类推。
+
+
+容量动态增长的原理
+elementData = Arrays.copyOf(elementData, newCapacity);
+
+
+添加大量数据的性能问题
+默认容量为10，当add大量数据时，会频繁进行扩容，即数组复制，影响效率的同时很容易导致内存不足而gc。
+解决办法：
+使用设置初始容量的构造方法；
+public ArrayList(int initialCapacity)
+ 
+
+容量与size
+容量是数组elementData的长度，size是数组elementData中有效元素的个数
+
+
+插入元素和删除元素的核心实现
+插入：public void add(int index, E element)
+    System.arraycopy(elementData, index, elementData, index + 1,size - index);
+    elementData[index] = element;
+size++;
+删除：public E remove(int index)
+    System.arraycopy(elementData, index+1, elementData, index,size - index - 1);
+    elementData[--size] = null
+
+
+ArrayList与Array的转换
+ArrayList转Array
+Object[] ArrayList.toArray()
+T[] ArrayList.toArray(T[] a) 通常传个空数组就可以了
+T[] ArrayList.toArray(Class<T> clz)  可实现
+    Arrays.copyOf(elementData, size, clz)
+Array转ArrayList
+ArrayList并没有一个传数组的构造方法，这点需要改进~~
+Arrays.asList(T... a) 可把数组转换成ArrayList，但此ArrayList只是Arrays类的内部类，而并非java.util.ArrayList,折衷方法：
+new ArrayList(Arrays.asList(T... a))
+
+
+求集合的并集、交集、补集
+boolean addAll(Collection<? extends E> c) 并集
+boolean removeAll(Collection<?> c) 补集
+boolean retainAll(Collection<?> c) 交集
+removeAll和retainAll使用相同的算法batchRemove,基本原理都是：
+把需要保留的往前挪，然后删除不要的。
+
+
+ArarayList遍历方式以及效率比较
+fori 效率最高
+iterator 其次 
+foreach iterator的简化形式 最低
+参考：
+Java接口RandomAccess 
+http://blog.csdn.net/ochangwen/article/details/51056655
+ArarayList遍历方式以及效率比较
+http://www.cnblogs.com/aoguren/p/4771589.html
+解惑：
+RandomAccess接口只是一个标记接口，标记一个集合为可随机访问列表,之所以说实际了RandomAccess的接口接口fori比iterator快，是因为iterator的实现通常需要更多的开销。如：
+ArrayList的iterator的内部实现实际上也是ArrayList.get(i),之所以慢，是因为需要不断的记录cursor和lastRet带来的开销，实测也慢不了多少。
