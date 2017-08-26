@@ -1,50 +1,50 @@
-ʱ�亯��
+时间函数
 
-��ǰʱ��
+当前时间
 >SELECT NOW();
 >SELECT CURDATE();
 >SELECT CURTIME();
 
-ʱ����ȡ
+时间提取
 >SELECT DATE(NOW());
 >SELECT TIME(NOW());
 >SELECT EXTRACT(MONTH FROM NOW());
 
-������ʱ���ת��
->SELECT UNIX_TIMESTAMP(NOW());   //����תʱ�������λΪs
->SELECT FROM_UNIXTIME(UNIX_TIMESTAMP(NOW()));   //ʱ���ת����
+日期与时间戳转换
+>SELECT UNIX_TIMESTAMP(NOW());   //日期转时间戳，单位为s
+>SELECT FROM_UNIXTIME(UNIX_TIMESTAMP(NOW()));   //时间戳转日期
 
-�ַ���������ת��
-DATE_FORMAT(date,format) ��ʽ��ʱ��Ϊ�ַ���
+字符串与日期转换
+DATE_FORMAT(date,format) 格式化时间为字符串
 >SELECT DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')  //2017-05-31 11:11:12
-STR_TO_DATE(str,format) �ַ�����ʽ��Ϊʱ�䣬��������ʱ���ʽ���ַ�������ֱ��ʹ�ã������ܵ�ΪĳЩʱ�亯���ı���ʽ
+STR_TO_DATE(str,format) 字符串格式化为时间，大多数情况时间格式的字符串可以直接使用，但不能但为某些时间函数的表达式
 >SELECT EXTRACT(MONTH FROM STR_TO_DATE('2017-06-31 11:32:42','%Y-%m-%d %H:%i:%s'))
 
-ʱ�䲿����ֵ��
+时间部分零值化
 SELECT CAST(CURDATE() AS DATETIME);  //2017-05-31 00:00:00
 SELECT DATE_FORMAT(CURDATE(),'%Y-%m-%d %H:%i:%s');  //2017-05-31 00:00:00
 
-TIMESTAMPDIFF(unit,datetime_expr1,datetime_expr2)  �����������ڵ�ʱ����-ǰ��
->SELECT TIMESTAMPDIFF(MONTH,'2009-12-01','2009-09-01')  	//�²�,-3
->SELECT TIMESTAMPDIFF(YEAR,'2009-05-01','2008-01-01');  //���,-1
->SELECT TIMESTAMPDIFF(SECOND,DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s'),'2013-03-07 15:43:00')    //���
+TIMESTAMPDIFF(unit,datetime_expr1,datetime_expr2)  计算两个日期的时间差（后-前）
+>SELECT TIMESTAMPDIFF(MONTH,'2009-12-01','2009-09-01')  	//月差,-3
+>SELECT TIMESTAMPDIFF(YEAR,'2009-05-01','2008-01-01');  //年差,-1
+>SELECT TIMESTAMPDIFF(SECOND,DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s'),'2013-03-07 15:43:00')    //秒差
 
-DATEDIFF(datetime_expr1,datetime_expr2)  �����������ڵ����(ǰ-��)
-��TIMESTAMPDIFF(DAY,datetime_expr1,datetime_expr2)�Ĳ��
-1)1����-ǰ��1��ǰ-��
-2)TIMESTAMPDIFF�Ľ���Ǻ��룬Ȼ������죬����1����Ϊ0��DATEDIFF��ȥTIME��������Ϊ������
+DATEDIFF(datetime_expr1,datetime_expr2)  计算两个日期的天差(前-后)
+与TIMESTAMPDIFF(DAY,datetime_expr1,datetime_expr2)的差别？
+1)1个后-前，1个前-后；
+2)TIMESTAMPDIFF的结果是毫秒，然后换算成天，不足1天则为0；DATEDIFF舍去TIME相减，结果为整数天
 
-DATE_ADD(date,INTERVAL expr unit) ����������ָ����ʱ�䣬expr��Ϊ��
->SELECT DATE_ADD(now(),INTERVAL -3 MONTH);   //������ǰ
->SELECT DATE_ADD(now(),INTERVAL 7 DAY);   //7���
+DATE_ADD(date,INTERVAL expr unit) 向日期添加指定的时间，expr可为负
+>SELECT DATE_ADD(now(),INTERVAL -3 MONTH);   //三个月前
+>SELECT DATE_ADD(now(),INTERVAL 7 DAY);   //7天后
 
-DATE_SUB(date,INTERVAL expr unit) �����ڼ�ȥָ����ʱ��
-��ͬ��DATE_ADD(date,INTERVAL -expr unit)
+DATE_SUB(date,INTERVAL expr unit) 向日期减去指定的时间
+等同于DATE_ADD(date,INTERVAL -expr unit)
 
 
 -------------------------------
-��������
-ROUND(X) λֵX��������Ϊ��������С��λ
-ROUND(X,D) ��ֵX��������ΪС����Dλ����ֵ
-FLOOR(X) ����ȡ��
-CEIL(X) ����ȡ��
+整数函数
+ROUND(X) 位值X四舍五入为整数，无小数位
+ROUND(X,D) 将值X四舍五入为小数点D位的数值
+FLOOR(X) 向下取整
+CEIL(X) 向上取整

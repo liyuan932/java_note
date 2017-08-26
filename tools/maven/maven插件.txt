@@ -1,0 +1,5 @@
+fitlering
+参考
+http://maven.apache.org/plugins/maven-resources-plugin/examples/filter.html
+http://maven.apache.org/plugins/maven-resources-plugin/resources-mojo.html#delimiters
+

@@ -1,0 +1,48 @@
+LinkedList是基于链表数据结构的。它持有链表的第一点节点first和最后一个节点last.
+
+节点Node
+每个节点包括数据元素E以及指向上一个元素的节点prev和指向下一元素的节点next，其数据结构为:
+class Node<E> {
+    E item;
+    Node<E> next;
+    Node<E> prev;
+}
+
+添加、删除、插入节点的原理
+添加节点：
+添加第1个节点：
+next=null;pre=null;fisrt=last=newNode;
+添加之后的节点：
+last.next=newNode;newNode.pre=last;last=newNode;
+核心方法参见linkLast(E e);
+删除节点：
+delNode.pre.next = delNode.next;delNode.next.pre = delNode.pre;
+称之为断链，核心方法参见unlink(Node<E> l)
+在某节点之前插入新节点：
+newNode.next = insNode;newNode.pre = insNode.pre;
+insNode.pre = newNode;
+insNode.pre.next = newNode;
+核心方法参写linkBefore(E e, Node<E> succ)
+
+
+遍历节点
+遍历的原理是根据first.pre或last.next必为空来实现的。
+for (Node<E> x = first; x != null; x = x.next){}
+for (Node<E> x = last; x != null; x = x.pre){}
+
+fori与iterator遍历的效率
+链表是顺序访问的数据结构，使用索引i去访问节点，需要从1个节点开始查找，一直到每i个节点，访问效率较低；而iterator本身就是通过next()来定位元素的，天生就适合顺序访问列表，所在在LinkedList中，使用fori遍历的效率要远低于iterator。
+
+LinkedList与ArrayList对比 
+ArrayList基于动态数组的数据结构，实现RandomAccess接口，可通过索引随机访问元素；
+LinkedList基于链表的数据结构，只能顺序访问元素；
+ArrayList和LinkedList在性能上各有优缺点，都有各自所适用的地方，总的说来可以描述如下：
+1、对ArrayList和LinkedList而言，在列表末尾增加一个元素所花的开销都是固定的。对ArrayList而言，主要是在内部数组中增加一项，指向所添加的元素，偶尔可能会导致对数组重新进行分配；而对LinkedList而言，这个开销是统一的，分配一个内部Entry对象。
+2、在ArrayList的中间插入或删除一个元素意味着这个列表中剩余的元素都会被移动；而在LinkedList的中间插入或删除一个元素的开销是固定的。
+3、LinkedList不支持高效的随机元素访问。
+4、ArrayList的空间浪费主要体现在在list列表的结尾预留一定的容量空间，而LinkedList的空间花费则体现在它的每一个元素都需要消耗相当的空间
+参考:
+Java中ArrayList和LinkedList区别
+http://pengcqu.iteye.com/blog/502676
+Java集合框架里ArrayList Vector和LinkedList的区别
+http://blog.csdn.net/ochangwen/article/details/51055722

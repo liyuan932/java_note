@@ -1,0 +1,27 @@
+spring-boot-maven-plugin插件
+http://docs.spring.io/spring-boot/docs/current/maven-plugin/
+http://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html
+https://stackoverflow.com/questions/23217002/how-do-i-tell-spring-boot-which-main-class-to-use-for-the-executable-jar
+repackage目标
+生成一个可执行的jar或war包，默认绑定在package阶段。
+
+启动项目
+mvn spring-boot:run
+java -jar *.jar
+
+插件配置
+<configuration>
+    <fork>true</fork>
+    <executable>false</executable>
+    <excludeDevtools>true</excludeDevtools>
+</configuration>
+
+
+CommandLineRunner和ApplicationRunner
+http://blog.csdn.net/gebitan505/article/details/55047819
+spring boot应用启动时执行，可用来加载配置文件、清除缓存等初始化工作。多个实例可使用@Order指定执行顺序。
+两者区别：ApplicationRunner可以更详细地获取命令行参数。
+ @Bean
+CommandLineRunner sampleCommandLineRunner() {
+    return (args) -> System.out.println(this.cityMapper.findByState("CA"));
+}

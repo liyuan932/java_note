@@ -1,0 +1,7 @@
+
+github
+https://github.com/mybatis/spring-boot-starter
+MyBatis-Spring-Boot-Starter参考文档
+http://www.mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/
+mybatis-spring参考文档
+http://www.mybatis.org/spring/index.html

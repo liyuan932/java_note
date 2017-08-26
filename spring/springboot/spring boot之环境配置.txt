@@ -1,0 +1,88 @@
+=================================================
+spring boot version：1.5.6.RELEASE
+=================================================
+=====spring-boot-starter-parent 相关配置=======
+<resources>
+    <resource>
+        <directory>${basedir}/src/main/resources</directory>
+        <filtering>true</filtering>  <!--默认开始filtering-->
+        <includes>
+            <include>**/application*.yml</include>
+            <include>**/application*.yaml</include>
+            <include>**/application*.properties</include>
+        </includes>
+    </resource>
+    <resource>
+        <directory>${basedir}/src/main/resources</directory>
+        <excludes>
+            <exclude>**/application*.yml</exclude>
+            <exclude>**/application*.yaml</exclude>
+            <exclude>**/application*.properties</exclude>
+        </excludes>
+    </resource>
+</resources>
+
+<plugin>
+    <artifactId>maven-resources-plugin</artifactId>
+    <version>2.6</version>
+    <configuration>
+    <delimiters>
+        <delimiter>@</delimiter>
+    </delimiters>
+    <useDefaultDelimiters>false</useDefaultDelimiters>
+    </configuration>
+</plugin>
+
+========基本知识========
+filtering
+可以在资源文件使用变量，变量用${}或@分隔符表示，变量可以是系统变量、环境变量、POM的属性、由filter元素指定的外部文件以及命令行。
+${env.PATH} 环境变量
+${user.home} 系统变量
+${groupId} POM预定义属性
+${java.verion}  在<properties>元素中自定义的属性
+mvn resources:resources -Dname=liyuan 命令行参数
+<build>  
+    <filters>
+        <filter>src/main/filter/filter-env.properties</filter> //指定外部文件
+    </filters>
+</build>
+
+文件路径通配符
+* 表示0个或多个字符
+**  表示0级或多级目录
+**/application*.properties 可以匹配：
+application.properties
+application-jdbc.properties
+common/application-base.properties
+**/*  表示所有目录下的所有文件
+
+resource.delimiter
+用于表示变量的分隔符,maven-resources-plugin插件下可配置，默认为
+<delimiters>
+  <delimiter>${*}</delimiter>  //带*
+  <delimiter>@</delimiter>     //不带*,等价于@*@
+</delimiters>
+
+profile
+根据不同环境定义不同的属性
+<profiles>
+    <profile>
+        <!--开发环境-->
+        <id>dev</id> 
+        <properties>
+            <env>dev</env>
+        </properties>
+        <activation>
+            <activeByDefault>true</activeByDefault> <!--默认激活-->
+        </activation>
+    </profile>
+<profile>
+    <!--生产环境-->
+    <id>product</id>
+    <properties>
+        <env>product</env>
+    </properties>
+</profile>
+</profiles>
+使用-PprofileId参数来激活不同的环境配置，如
+mvn clean resources:resources -Pproduct 

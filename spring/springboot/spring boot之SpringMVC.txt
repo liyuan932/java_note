@@ -1,0 +1,2 @@
+定制HTTP消息转换器
+http://www.jianshu.com/p/ffe56d9553fd
