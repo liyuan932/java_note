@@ -25,3 +25,13 @@ spring boot应用启动时执行，可用来加载配置文件、清除缓存等
 CommandLineRunner sampleCommandLineRunner() {
     return (args) -> System.out.println(this.cityMapper.findByState("CA"));
 }
+
+@SpringBootApplication注解
+等价于
+@EnableAutoConfiguration
+@ComponentScan
+@Configuration
+
+
+spring boot热部署
+http://blog.csdn.net/zknxx/article/details/53428669
