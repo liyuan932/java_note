@@ -1,0 +1,8 @@
+定制HTTP消息转换器
+http://www.jianshu.com/p/ffe56d9553fd
+
+增加自定义filter
+http://www.jianshu.com/p/05c8be17c80a
+
+Spring Session
+https://docs.spring.io/spring-session/docs/current/reference/html5/guides/boot.html

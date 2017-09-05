@@ -1,0 +1,4 @@
+Windows下安装Redis
+http://blog.csdn.net/renfufei/article/details/38474435
+下载地址
+https://github.com/MicrosoftArchive/redis/releases

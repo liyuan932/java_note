@@ -1,0 +1,25 @@
+Java的位运算符详解实例——与（&）、非（~）、或（|）、异或（^）
+http://blog.csdn.net/vebasan/article/details/6193916
+
+使用二进制的位表示多标记
+二进制每一位可以表示一个boolean值的标记。
+标记类型
+byte tag = 0L; //可以表示8个标记
+
+标记定义
+public enum TagEnum {
+    ONE(1,"ONE"),TWO(2,"TWO")THREE(4,"THREE"),FOUR(8,"FOUR"),FIVE(16,"FIVE")
+}
+*8的二进制值为00001000,所以FOUR用来表示第4个标记
+
+添加标记
+tag = tag + TagEnum.TWO.getIndex() + TagEnum.FOUR.getIndex();   //直接相加，不支持并发
+tag = tag | TagEnum.TWO.getIndex() | TagEnum.FOUR.getIndex();  //使用|运算符
+去掉标记
+tag = tag - TagEnum.FOUR.getIndex();   //直接相减
+tag = tag ^ TagEnum.FOUR.getIndex(); 
+
+判断某个标记是否存在
+tag & TagEnum.FOUR.getIndex() == TagEnum.FOUR.getIndex()
+假定tag=1+2+4+16=23
+00010111 & 00000100 =  00000100

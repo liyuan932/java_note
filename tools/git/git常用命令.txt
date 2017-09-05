@@ -1,0 +1,59 @@
+#用户全局配置
+git config --global user.name "liyuan932"
+git config --global user.email "liyuan932@gmail.com"
+
+#SSH keys
+ssh-keygen -t rsa -C "liyuan932@gmail.com"  //复制公钥到gitlab
+ssh -T git@github.com
+
+#本地建仓同步到远程库
+git init
+git remote add origin git@github.com:liyuan932/myapp.git
+git push origin master
+
+#克隆远程库到本地
+git clone "git@github.com:liyuan932/myapp.git"
+
+#日常操作
+git status          	  	
+git add <file>    //可使用通过符		
+git commit -m "message"    
+
+#版本回退与恢复
+git log --pretty=oneline  //提交日志
+git reset --hard HEAD   //回退到当前版本提交的状态
+git reset --hard HEAD~1 //回退到上几次comit
+git reflog  //命令日志
+git reset --hard commit_id
+
+#撤消修改
+git reset HEAD <file>   //撤消stage的修改
+git checkout -- <file>  //撤消work的修改
+
+#分支管理
+git branch   //查看本地所有分支
+git branch -a   //查看本地和远程所有分支
+git branch <name>   //创建分支
+git checkout <name>  //切换分支
+git checkout -b <name>  //创建并切换分支 
+git branch -d <name>   //删除本地分支
+git branch origin :<branch-name>  //删除远程分支 
+git branch -D <name>
+git push --set-upstream origin <branch-name>  //把本地分支推送到远程服务器
+git merge <name>  //合并指定分支到当分支（Fast forward）
+git merge -no-ff -m "merge message" <name>  ////合并指定分支到当分支（禁用Fast forward）
+
+#tag管理
+git tag    //查看所有tag
+git tag <name>  //给本地分支创建tag
+git tag <name> <commit id>   //给历史提交打tag
+git tag -a <tagname> -m "comment"  //创建带说明的tag
+git show <tagname>   //查看tag
+git push origin <tagname>  //推送tag到远程服务器
+git push orgin --tags  //推送全部未推送过的本地标签推送
+git tag -d <tagname>  //删除一个本地tag
+git push origin :refs/tags/<tagname>  //删除一个远程tag 
+
+git stash
+git stash list
+git stash pop

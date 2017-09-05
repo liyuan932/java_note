@@ -1,0 +1,14 @@
+廖雪峰-Git教程
+https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000
+https://git-scm.com/book/zh/v2
+
+工作区和暂存区
+Untracked files 未被git管理的文件
+Changes not staged for commit  被git管理，有修改，但未添加到stage
+Changes to be committed  stage中未提交的文件（新文件或修改的文件）
+
+回退模式
+--hard  reset HEAD, index and working tree 回退到指定版本，所有修改丢失
+--keep  reset HEAD but keep local changes  回退到指定版本，本地修改保留
+--mixed reset HEAD and index 只回退版本库，版本差异保留在工作区，本地修改保留
+--soft  reset only HEAD  只回退版本库，版本差异保留在暂存区，本地修改保留
