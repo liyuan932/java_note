@@ -1,0 +1,37 @@
+DAO
+   /**
+    *
+    * @param table 防重复提交的表名（用户存放版本字段，控制并发提交）
+    * @param id  防重复提交的记录的ID，用户标识，该条记录在该流程中没有其他并发提交
+    * @param warehouseId 仓库分表ID
+    * @param version 当前版本号
+    * @return 更新当前版本号为 （当前版本号+1）如果成功，则返回1，否则返回0
+    */
+    @Update
+    Integer updateConcurrentVersion(@Param("table") String table,@Param("id") Long id,@Param("warehouseId") Long warehouseId,@Param("version") Integer version);
+
+
+SqlMap
+    <update id="updateConcurrentVersion">
+        update $table$
+        set gmt_modified = now()
+        <isNull property="version" prepend=",">
+            version = 1
+        </isNull>
+        <isNotNull property="version" prepend=",">
+            version = version + 1
+        </isNotNull>
+        where id = #id#
+        and warehouse_id = #warehouseId#
+        <isNull property="version" prepend="and">
+            version is null
+        </isNull>
+        <isNotNull property="version" prepend="and">
+            version = #version#
+        </isNotNull>
+    </update>
+
+Service
+    public boolean isRequestValid(String tableName, Long id, Long warehouseId, Integer currentVersion) {
+        return concurrentControlDAO.updateConcurrentVersion(tableName,id,warehouseId,currentVersion) > 0;
+    }
