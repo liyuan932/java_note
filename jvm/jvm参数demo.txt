@@ -1,0 +1,19 @@
+日常环境
+/opt/taobao/java/bin/java -Djava.util.logging.config.file=/home/admin/wmsinner/.default/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Dcatalina.vendor=alibaba -Djava.security.egd=file:/dev/./urandom -Dlog4j.defaultInitOverride=true -Dorg.apache.tomcat.util.http.ServerCookie.ALLOW_EQUALS_IN_VALUE=true -Dorg.apache.tomcat.util.http.ServerCookie.ALLOW_HTTP_SEPARATORS_IN_V0=true -agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n -server -Xms2g -Xmx2g -XX:PermSize=256m -XX:MaxPermSize=256m -Xmn1g -XX:MaxDirectMemorySize=1g -XX:SurvivorRatio=10 -XX:+UseConcMarkSweepGC -XX:+UseCMSCompactAtFullCollection -XX:CMSMaxAbortablePrecleanTime=5000 -XX:+CMSClassUnloadingEnabled -XX:CMSInitiatingOccupancyFraction=80 -XX:+UseCMSInitiatingOccupancyOnly -XX:+ExplicitGCInvokesConcurrent -Dsun.rmi.dgc.server.gcInterval=2592000000 -Dsun.rmi.dgc.client.gcInterval=2592000000 -XX:ParallelGCThreads=2 -Xloggc:/home/admin/logs/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/admin/logs/java.hprof -Djava.awt.headless=true -Dsun.net.client.defaultConnectTimeout=10000 -Dsun.net.client.defaultReadTimeout=30000 -DJM.LOG.PATH=/home/admin/logs -DJM.SNAPSHOT.PATH=/home/admin/snapshots -Dfile.encoding=GB18030 -Dhsf.publish.delayed=false -Dproject.name=wmsinner -Djava.endorsed.dirs=/opt/taobao/tomcat/endorsed -classpath /opt/taobao/tomcat/bin/bootstrap.jar:/opt/taobao/tomcat/bin/tomcat-juli.jar -Dcatalina.logs=/home/admin/wmsinner/logs/catalina -Dcatalina.base=/home/admin/wmsinner/.default -Dcatalina.home=/opt/taobao/tomcat -Djava.io.tmpdir=/home/admin/wmsinner/.default/temp org.apache.catalina.startup.Bootstrap start
+
+java version "1.7.0_75" 4G内存
+
+-server  服务器模式
+
+#JVM内存相关
+-Xms2g -Xmx2g  最小和最大堆内存大小
+-XX:PermSize=256m  -XX:MaxPermSize=256m  最小和最大永久代大小
+-Xmn1g   新生代大小
+-XX:SurvivorRatio=10 Eden空间与Survivor空间的比例,默认为8
+-XX:MaxDirectMemorySize=1g  最大直接内存大小
+
+#GC相关
+-XX:+UseConcMarkSweepGC  GC组合：新生代使用ParNew, 老年代使用CMS
+-XX:+UseCMSCompactAtFullCollection  在FULL GC的时候， 对年老代进行压缩整理
+-XX:+UseCMSInitiatingOccupancyOnly 手动配置使用空间比率,默认是自动
+-XX:CMSInitiatingOccupancyFraction=80 年老代使用空间达到百分之80%时触发CMS
