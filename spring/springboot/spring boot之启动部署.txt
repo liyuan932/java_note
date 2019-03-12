@@ -4,6 +4,8 @@ http://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins
 https://stackoverflow.com/questions/23217002/how-do-i-tell-spring-boot-which-main-class-to-use-for-the-executable-jar
 repackage目标
 生成一个可执行的jar或war包，默认绑定在package阶段。
+mvn package spring-boot:repackage
+https://blog.csdn.net/taiyangdao/article/details/75519166
 
 启动项目
 mvn spring-boot:run
